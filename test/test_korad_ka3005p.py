@@ -11,7 +11,7 @@ class GenericKoradKA3005PTest:
         self.assertEqual(ids, "KORADKA3005PV2.0")
 
 
-class TestKoradKA3005P(GenericNovatech409BTest, ControllerCase):
+class TestKoradKA3005P(GenericKoradKA3005PTest, ControllerCase):
     def setUp(self):
         ControllerCase.setUp(self)
         self.start_controller("korad_ka3005p")
