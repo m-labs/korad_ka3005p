@@ -1,20 +1,15 @@
 Welcome to Korad_KA3005P's documentation!
 =========================================
 
-Contents:
-
-.. toctree::
-   :maxdepth: 2
-
-:mod:`korad_ka3005p.driver` module
-----------------------------------
+API
+---
 
 .. automodule:: korad_ka3005p.driver
     :members:
 
 
-:mod:`korad_ka3005p.acqtl_korad_ka3005p` module
------------------------------------------------
+ARTIQ controller
+----------------
 
 .. argparse::
    :ref: korad_ka3005p.aqctl_korad_ka3005p.get_argparser
