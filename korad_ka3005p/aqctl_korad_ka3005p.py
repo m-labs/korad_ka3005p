@@ -10,6 +10,7 @@ import os
 
 from korad_ka3005p import KoradKA3005P
 from sipyco.pc_rpc import simple_server_loop
+from sipyco.tools import SimpleSSLConfig
 from sipyco import common_args
 
 
@@ -19,7 +20,7 @@ logger = logging.getLogger(__name__)
 def get_argparser():
     parser = argparse.ArgumentParser(
         description="ARTIQ controller for the Korad KA3005P programmable DC power supply")
-    common_args.simple_network_args(parser, 3256)
+    common_args.simple_network_args(parser, 3256, ssl=True)
     parser.add_argument(
         "-d", "--device", default=None,
         help="serial port.")
@@ -33,6 +34,7 @@ def get_argparser():
 def main():
     args = get_argparser().parse_args()
     common_args.init_logger_from_args(args)
+    ssl_config = SimpleSSLConfig(*args.ssl) if args.ssl else None
 
     if os.name == "nt":
         asyncio.set_event_loop(asyncio.ProactorEventLoop())
@@ -46,7 +48,8 @@ def main():
     asyncio.get_event_loop().run_until_complete(dev.setup())
     try:
         simple_server_loop(
-            {"korad_ka3005p": dev}, common_args.bind_address_from_args(args), args.port)
+            {"korad_ka3005p": dev}, common_args.bind_address_from_args(args), args.port,
+            ssl_config=ssl_config)
     finally:
         dev.close()
 
